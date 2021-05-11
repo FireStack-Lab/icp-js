@@ -1,0 +1,29 @@
+{
+	"name": "@icp-js/crypto",
+	"version": "1.0.0",
+	"description": "crypto for icp-js",
+	"main": "dist/index.js",
+	"node": "dist/index.js",
+	"browser": "dist/index.js",
+	"module": "dist/index.esm.js",
+	"jsnext:main": "dist/index.esm.js",
+	"typings": "dist/index.d.ts",
+	"types": "dist/index.d.ts",
+	"scripts": {
+		"test": "echo \"Error: no test specified\" && exit 1"
+	},
+	"publishConfig": {
+		"access": "public"
+	},
+	"author": "neeboo@firestack.one",
+	"license": "MIT",
+	"dependencies": {
+		"@icp-js/utils": "^1.0.0",
+		"bip39": "^3.0.4",
+		"bn.js": "^5.2.0",
+		"elliptic": "^6.5.4",
+		"hdkey": "^2.0.1",
+		"hmac-drbg": "^1.0.1",
+		"js-sha256": "^0.9.0"
+	}
+}

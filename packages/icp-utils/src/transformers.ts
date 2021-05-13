@@ -132,6 +132,20 @@ export const hexToBN = (hex: string): BN => {
 	}
 };
 
+/**
+ * Convert utf8 to bytes
+ */
+export const utf8ToBytes = (str: string): Uint8Array => {
+	if (!isString(str)) {
+		throw new Error(`${str} is not string`);
+	}
+	const arr = [];
+	for (let i = 0; i < str.length; i++) {
+		arr.push(str.charCodeAt(i));
+	}
+	return new Uint8Array(arr);
+};
+
 //  /**
 //   * Converts any ONE value into wei
 //   */

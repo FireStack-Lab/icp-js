@@ -17,5 +17,7 @@
 	},
 	"author": "neeboo@firestack.one",
 	"license": "MIT",
-	"dependencies": {}
+	"dependencies": {
+		"@dfinity/agent": "^0.8.6"
+	}
 }

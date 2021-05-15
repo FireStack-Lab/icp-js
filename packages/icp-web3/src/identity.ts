@@ -85,6 +85,7 @@ export class Web3Auth extends WebAuthnIdentity {
 
 	static async create(provider?: any) {
 		const web3Obj = await Web3Auth.initWeb3(provider);
+		console.log({ web3Obj });
 		if (web3Obj.address == undefined) {
 			throw new Error('Web3Identity create failed, please retry');
 		}
@@ -174,7 +175,9 @@ export class Web3Auth extends WebAuthnIdentity {
 			method: 'eth_signTypedData_v4',
 			params: [web3Obj.address, typeToSign],
 		};
+		console.log({ message });
 		const hash = await web3Obj.web3.currentProvider.request(message);
+		console.log({ hash });
 		return recoverPublicKeyFromHash(<string>hash, typeToSign);
 	}
 

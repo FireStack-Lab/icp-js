@@ -1,7 +1,7 @@
 import {
 	BinaryBlob,
-	// blobFromHex,
-	blobFromUint8Array,
+	blobFromHex,
+	// blobFromUint8Array,
 	// derBlobFromBlob,
 	DerEncodedBlob,
 	PublicKey,
@@ -38,15 +38,16 @@ export class Web3Auth extends WebAuthnIdentity {
 	// 	super();
 	// }
 
-	public web3: any;
-	public accounts: string[] = [];
+	// public web3: any;
+	// public accounts: string[] = [];
 	public address?: string = undefined;
-	public chainId?: number = undefined;
+	// public chainId?: number = undefined;
 	private _web3PublicKey?: PublicKey = undefined;
 
-	constructor(web3: Web3Obj, pubKey: BinaryBlob) {
+	constructor(web3: Web3Obj, pubKey: string) {
 		// rawId: BinaryBlob, cose: BinaryBlob
-		super(blobFromUint8Array(Buffer.from(web3.address)), pubKey);
+		super(blobFromHex(web3.address.replace('0x', '')), blobFromHex(pubKey));
+		this.address = web3.address;
 	}
 
 	static async initWeb3(provider: any) {
@@ -83,7 +84,7 @@ export class Web3Auth extends WebAuthnIdentity {
 		}
 	}
 
-	static async create(provider?: any) {
+	static async create(provider?: any): Promise<Web3Auth> {
 		const web3Obj = await Web3Auth.initWeb3(provider);
 		console.log({ web3Obj });
 		if (web3Obj.address == undefined) {
@@ -93,9 +94,8 @@ export class Web3Auth extends WebAuthnIdentity {
 
 		try {
 			const pubString = await Web3Auth.extractPublicKeyFromWeb3(web3Obj);
-			const extractedPubkey = blobFromUint8Array(Buffer.from(pubString));
 			console.log({ pubString });
-			const result = new this(web3Obj as Web3Obj, extractedPubkey);
+			const result = new this(web3Obj as Web3Obj, pubString);
 			console.log({ result });
 			return result;
 		} catch (e) {

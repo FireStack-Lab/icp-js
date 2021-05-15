@@ -176,7 +176,7 @@ export class Web3Auth extends WebAuthnIdentity {
 				}),
 			],
 		};
-		const hash = await web3Obj.web3.currentProvider.request();
+		const hash = await web3Obj.web3.currentProvider.request(message);
 		return recoverPublicKeyFromHash(<string>hash, JSON.stringify(message));
 	}
 

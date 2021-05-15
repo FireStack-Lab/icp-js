@@ -1,6 +1,6 @@
 {
 	"name": "@icp-js/crypto",
-	"version": "0.0.4",
+	"version": "0.0.5",
 	"description": "crypto for icp-js",
 	"main": "dist/index.js",
 	"node": "dist/index.js",
@@ -18,7 +18,7 @@
 	"author": "neeboo@firestack.one",
 	"license": "MIT",
 	"dependencies": {
-		"@icp-js/utils": "^0.0.4",
+		"@icp-js/utils": "^0.0.5",
 		"@types/asn1": "^0.2.0",
 		"asn1": "^0.2.4",
 		"bip39": "^3.0.4",

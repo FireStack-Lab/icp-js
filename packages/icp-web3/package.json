@@ -1,6 +1,6 @@
 {
 	"name": "@icp-js/web3",
-	"version": "0.0.5-fix",
+	"version": "0.0.5-fix2",
 	"description": "utils for icp-js",
 	"main": "dist/index.js",
 	"node": "dist/index.js",

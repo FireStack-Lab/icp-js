@@ -23,7 +23,6 @@ export async function getKeyPair(
 	if (!isValidMnemonic(mnemonic)) {
 		throw new Error('Mnemonic invalid or undefined');
 	}
-
 	const node = hdkey.fromMasterSeed(await bip39.mnemonicToSeed(mnemonic));
 	const masterPrv = node.derive(`${ICP_PATH}/0/${index}`);
 	const masterPrvRaw = node.derive(`${ICP_PATH}`);

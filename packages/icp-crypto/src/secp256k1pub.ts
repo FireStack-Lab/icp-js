@@ -1,6 +1,6 @@
 import { agent } from '@icp-js/utils';
 
-export class Secp256k1PublicKey implements agent.PublicKey {
+class Secp256k1PublicKey implements agent.PublicKey {
 	private readonly rawKey: agent.BinaryBlob;
 	private readonly derKey: agent.DerEncodedBlob;
 	private static RAW_KEY_LENGTH = 65;
@@ -76,3 +76,5 @@ export class Secp256k1PublicKey implements agent.PublicKey {
 		return this.rawKey;
 	}
 }
+
+export { Secp256k1PublicKey };

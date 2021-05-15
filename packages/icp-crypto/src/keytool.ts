@@ -1,5 +1,6 @@
 import elliptic from 'elliptic';
 import { agent, isPrivateKey, strip0x, utf8ToBytes } from '@icp-js/utils';
+import * as sigUtil from 'eth-sig-util';
 import { sha224 as jsSha224 } from 'js-sha256';
 import { keccak256 } from './keccak256';
 import { Secp256k1PublicKey } from './secp256k1pub';
@@ -29,25 +30,49 @@ export const validatePrivateKey = (privateKey: string): boolean => {
  * @return {string} address with `length = 40`
  */
 export const getAddressFromPublicKey = (publicKey: string, with0x: boolean = false): string => {
-	const ecKey = secp256k1.keyFromPublic(
-		publicKey.startsWith('0x') ? publicKey.slice(2) : publicKey,
-		'hex'
-	);
-	const publicHash = ecKey.getPublic(false, 'hex');
+	const publicHash = getUncompressPublicKey(publicKey);
 	const address = keccak256('0x' + publicHash.slice(2)).slice(-40);
 	return with0x ? '0x' + address : address;
 };
 
+/**
+ * @function getUncompressPublicKey
+ * @param  {string} publicKey- public key
+ * @return {string} Uncompress public key
+ */
+export const getUncompressPublicKey = (publicKey: string): string => {
+	const ecKey = secp256k1.keyFromPublic(
+		publicKey.startsWith('0x') ? publicKey.slice(2) : publicKey,
+		'hex'
+	);
+	return ecKey.getPublic(false, 'hex');
+};
+
+/**
+ * @function getSecp256k1FromPublicKey
+ * @param  {string} publicKey: uncompressed public key
+ * @return {string} : secp256k1 public key
+ */
 export const getSecp256k1FromPublicKey = (publicKey: string): string => {
 	return Secp256k1PublicKey.fromRaw(agent.blobFromHex(publicKey)).toDer().toString('hex');
 };
 
+/**
+ * @function getPrincipalFromPublicKey
+ * @param  {string} publicKey: uncompressed public key
+ * @return {string} {principal text}
+ */
 export const getPrincipalFromPublicKey = (publicKey: string): string => {
 	const secp256k1Pub = Secp256k1PublicKey.fromRaw(agent.blobFromHex(publicKey)).toDer();
 	const auth = agent.Principal.selfAuthenticating(secp256k1Pub);
 	return auth.toText();
 };
 
+/**
+ * @function getAccountIdFromPublicKey
+ * @param  {string} publicKey: uncompressed public key
+ * @return {string} accountId
+ */
 export const getAccountIdFromPublicKey = (publicKey: string): string => {
 	const der = Secp256k1PublicKey.fromRaw(agent.blobFromHex(publicKey)).toDer();
 	const hash = jsSha224.create();
@@ -63,4 +88,14 @@ export const getAccountIdFromPublicKey = (publicKey: string): string => {
 	const array = new Uint8Array([...checksum, ...bytes]);
 
 	return Buffer.from(array).toString('hex');
+};
+
+export const recoverPublicKeyFromHash = (hash: string, originMessage: string) => {
+	const msgParams = { data: originMessage, sig: hash };
+	return sigUtil
+		.extractPublicKey(
+			// msgParams as sigUtil.SignedMsgParams<string>
+			msgParams
+		)
+		.replace('0x', '04');
 };

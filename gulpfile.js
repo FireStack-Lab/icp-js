@@ -3,7 +3,7 @@ const del = require('del');
 const fs = require('fs');
 const path = require('path');
 
-const packages = ['icp-crypto', 'icp-utils'];
+const packages = ['icp-crypto', 'icp-utils', 'icp-web3'];
 
 task('cleanBrowser', async () => {
 	await packages.map((p) => {

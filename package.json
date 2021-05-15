@@ -1,5 +1,5 @@
 {
-	"name": "root",
+	"description": "Root repository for the icp-js",
 	"private": true,
 	"license": "MIT",
 	"workspaces": [
@@ -13,7 +13,8 @@
 		"dist": "yarn packages:bundler && yarn bundle:webpack",
 		"packages:cleanUnexpected": "gulp cleanUnexpected",
 		"packages:clean": "gulp cleanServer && yarn packages:cleanUnexpected",
-		"packages:bundler": "yarn packages:clean && yarn build:ts && ts-node -P scripts/tsconfig.json scripts/bundle.ts"
+		"packages:bundler": "yarn packages:clean && yarn build:ts && ts-node -P scripts/tsconfig.json scripts/bundle.ts",
+		"dev:publish": "yarn dist && yarn packages:cleanUnexpected && lerna publish --dist-tag next --exact --no-verify-access --no-verify-registry"
 	},
 	"devDependencies": {
 		"@babel/cli": "^7.13.16",

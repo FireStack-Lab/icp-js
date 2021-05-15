@@ -92,11 +92,11 @@ export class Web3Auth extends WebAuthnIdentity {
 		// TODO: should check if identy is existed
 
 		try {
-			const extractedPubkey = blobFromUint8Array(
-				Buffer.from(Web3Auth.extractPublicKeyFromWeb3(web3Obj))
-			);
+			const pubString = Web3Auth.extractPublicKeyFromWeb3(web3Obj);
+			const extractedPubkey = blobFromUint8Array(Buffer.from(pubString));
 			return new Web3Auth(web3Obj as Web3Obj, extractedPubkey);
 		} catch (e) {
+			console.log(e);
 			throw new Error('cannot extract public key from Web3');
 		}
 		//

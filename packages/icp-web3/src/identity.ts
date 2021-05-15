@@ -95,7 +95,9 @@ export class Web3Auth extends WebAuthnIdentity {
 			const pubString = await Web3Auth.extractPublicKeyFromWeb3(web3Obj);
 			const extractedPubkey = blobFromUint8Array(Buffer.from(pubString));
 			console.log({ pubString });
-			return new Web3Auth(web3Obj as Web3Obj, extractedPubkey);
+			const result = new this(web3Obj as Web3Obj, extractedPubkey);
+			console.log({ result });
+			return result;
 		} catch (e) {
 			console.log(e);
 			throw new Error('cannot extract public key from Web3');

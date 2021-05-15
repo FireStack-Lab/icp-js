@@ -1,6 +1,6 @@
 {
 	"name": "@icp-js/utils",
-	"version": "0.0.2",
+	"version": "0.0.3",
 	"description": "utils for icp-js",
 	"main": "dist/index.js",
 	"node": "dist/index.js",
